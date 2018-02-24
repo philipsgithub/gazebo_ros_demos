@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot name="my_actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="ns" default="my_actor"/>
+  <xacro:arg name="parent" default="world"/>
+
+  <xacro:include filename="$(find rrbot_description)/urdf/actor.urdf.xacro" ns="$(arg ns)"/>
+
+  <link name="$(arg parent)">
+  </link>
+
+  <xacro:my_actor.actor parent="$(arg parent)" ns="$(arg ns)">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <origin xyz="1 0 0" rpy="0 0 0" />
+    <box size="0.1 0.1 0.1" />
+  </xacro:my_actor.actor>
+
+</robot>

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<robot name="actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="actor" params="parent ns *actor_origin *obj_origin *obj_shape">
+        
+    <xacro:property name="prefix" value="${ns}_"/>
+
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="mass" value="1" />
+  
+    <xacro:property name="pos_x" value="2" />
+    <xacro:property name="pos_y" value="0" />
+    <xacro:property name="pos_z" value="1" />
+    <xacro:property name="obj_x" value="0.25" />
+    <xacro:property name="obj_y" value="0.25" />
+    <xacro:property name="obj_z" value="0.25" />
+  
+    <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+    <xacro:include filename="$(find rrbot_description)/urdf/actor.transmission.xacro" />
+    <xacro:include filename="$(find rrbot_description)/urdf/actor.gazebo.xacro" />
+
+    <xacro:include filename="$(find rrbot_description)/urdf/materials.urdf.xacro" />
+    <xacro:actor_materials />
+  
+    <joint name="${prefix}base_joint" type="fixed">
+      <xacro:insert_block name="actor_origin" />
+      <parent link="${parent}"/>
+      <child link="${prefix}base_link"/>
+    </joint>
+  
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="0 0 0.001" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+        ixx="0.0" ixy="0.0" ixz="0.0"
+  	    iyy="0.0" iyz="0.0"
+  	    izz="0.0"/>
+      </inertial>
+    </link>
+  
+    <joint name="${prefix}joint_1" type="continuous">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}link_1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.3"/>
+    </joint>
+  
+    <link name="${prefix}link_1">
+      <inertial>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+        ixx="0.0" ixy="0.0" ixz="0.0"
+  	    iyy="0.0" iyz="0.0"
+  	    izz="0.0"/>
+      </inertial>
+    </link>
+  
+    <joint name="${prefix}joint_2" type="continuous">
+      <parent link="${prefix}link_1"/>
+      <child link="${prefix}link_2"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="0.3"/>
+    </joint>
+  
+    <!-- Middle Link -->
+    <link name="${prefix}link_2">
+      <inertial>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+        ixx="0.0" ixy="0.0" ixz="0.0"
+  	    iyy="0.0" iyz="0.0"
+  	    izz="0.0"/>
+      </inertial>
+    </link>
+  
+    <joint name="${prefix}joint_3" type="continuous">
+      <parent link="${prefix}link_2"/>
+      <child link="${prefix}link_3"/>
+      <xacro:insert_block name="obj_origin" />
+      <!--<origin xyz="${pos_x} ${pos_y} ${pos_z}" rpy="0 0 0"/>-->
+      <axis xyz="1 0 0"/>
+      <dynamics damping="0.3"/>
+    </joint>
+  
+    <!-- Top Link -->
+    <link name="${prefix}link_3">
+      <inertial>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+        ixx="0.0" ixy="0.0" ixz="0.0"
+  	    iyy="0.0" iyz="0.0"
+  	    izz="0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <xacro:insert_block name="obj_shape" />
+        </geometry>
+        <material name="grey"/>
+      </visual>
+  
+    </link>
+
+    <xacro:actor_transmission prefix="${ns}_" />  
+    <xacro:actor_gazebo prefix="${ns}_" />  
+  </xacro:macro>
+</robot>
+          <!--<box size="${obj_x} ${obj_y} ${obj_z}"/>-->

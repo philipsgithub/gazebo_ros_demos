@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="actor_ns" default="my_actor"/>
+  <arg name="parent" default="world"/>
+
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find rrbot_gazebo)/worlds/simple_ground.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+
+  <group ns="$(arg actor_ns)" >
+    <param name="robot_description"
+      command="$(find xacro)/xacro --inorder --xacro-ns '$(find rrbot_description)/urdf/my_actor.urdf.xacro' actor_ns:=$(arg actor_ns) parent:=$(arg parent)" />
+  
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model my_actor -param robot_description">
+    </node>
+  </group>
+</launch>
