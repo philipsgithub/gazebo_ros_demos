@@ -19,8 +19,7 @@
     <xacro:include filename="$(find rrbot_description)/urdf/actor.gazebo.xacro" />
 
     <xacro:include filename="$(find rrbot_description)/urdf/materials.urdf.xacro" />
-    <xacro:actor_materials />
-  
+
     <joint name="${prefix}base_joint" type="fixed">
       <xacro:insert_block name="actor_origin" />
       <parent link="${parent}"/>
@@ -43,7 +42,6 @@
       <child link="${prefix}link_1"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
-      <dynamics damping="0.3"/>
     </joint>
   
     <link name="${prefix}link_1">
@@ -62,7 +60,6 @@
       <child link="${prefix}link_2"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <axis xyz="0 0 1"/>
-      <dynamics damping="0.3"/>
     </joint>
   
     <!-- Middle Link -->
@@ -75,8 +72,31 @@
   	    iyy="0.0" iyz="0.0"
   	    izz="0.0"/>
       </inertial>
+      <visual>
+        <origin xyz="0 -0.05 0" rpy="${PI/2} 0 0"/>
+        <geometry>
+          <mesh filename="package://rrbot_description/meshes/validation_ring_v3.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="black" />
+      </visual>
     </link>
   
+    <joint name="${prefix}add_2nd_mesh" type="fixed">
+      <parent link="${prefix}link_2"/>
+      <child link="${prefix}link_separate_mesh"/>
+    </joint>
+
+    <!-- Middle Link -->
+    <link name="${prefix}link_separate_mesh">
+      <visual>
+        <origin xyz="0 0.05 0" rpy="${PI/2} 0 ${PI}"/>
+        <geometry>
+          <mesh filename="package://rrbot_description/meshes/validation_ring_v3.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="white" />
+      </visual>
+    </link>
+
     <joint name="${prefix}joint_3" type="continuous">
       <parent link="${prefix}link_2"/>
       <child link="${prefix}link_3"/>
@@ -96,14 +116,6 @@
   	    iyy="0.0" iyz="0.0"
   	    izz="0.0"/>
       </inertial>
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <xacro:insert_block name="obj_shape" />
-        </geometry>
-        <material name="grey"/>
-      </visual>
-  
     </link>
 
     <xacro:actor_transmission prefix="${ns}_" />  

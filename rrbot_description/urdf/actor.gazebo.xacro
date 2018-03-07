@@ -7,5 +7,17 @@
       </plugin>
     </gazebo>
 
+    <gazebo reference="${prefix}link_2">
+      <material>Gazebo/LightGrey</material>
+    </gazebo>
+
+    <gazebo reference="${prefix}link_separate_mesh">
+      <material>Gazebo/LightGrey</material>
+    </gazebo>
+  
+    <gazebo reference="${prefix}link_3">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+
   </xacro:macro>
 </robot>
