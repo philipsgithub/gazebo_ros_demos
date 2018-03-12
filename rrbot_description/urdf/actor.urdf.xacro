@@ -73,27 +73,11 @@
   	    izz="0.0"/>
       </inertial>
       <visual>
-        <origin xyz="0 -0.05 0" rpy="${PI/2} 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://rrbot_description/meshes/validation_ring_v3.stl" scale="1 1 1"/>
+          <mesh filename="package://rrbot_description/meshes/spherical_ring.stl" scale="2 2 2"/>
         </geometry>
         <material name="black" />
-      </visual>
-    </link>
-  
-    <joint name="${prefix}add_2nd_mesh" type="fixed">
-      <parent link="${prefix}link_2"/>
-      <child link="${prefix}link_separate_mesh"/>
-    </joint>
-
-    <!-- Middle Link -->
-    <link name="${prefix}link_separate_mesh">
-      <visual>
-        <origin xyz="0 0.05 0" rpy="${PI/2} 0 ${PI}"/>
-        <geometry>
-          <mesh filename="package://rrbot_description/meshes/validation_ring_v3.stl" scale="1 1 1"/>
-        </geometry>
-        <material name="white" />
       </visual>
     </link>
 
