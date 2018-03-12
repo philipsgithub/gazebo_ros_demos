@@ -72,13 +72,6 @@
   	    iyy="0.0" iyz="0.0"
   	    izz="0.0"/>
       </inertial>
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://rrbot_description/meshes/spherical_ring.stl" scale="2 2 2"/>
-        </geometry>
-        <material name="black" />
-      </visual>
     </link>
 
     <joint name="${prefix}joint_3" type="continuous">
@@ -100,10 +93,15 @@
   	    iyy="0.0" iyz="0.0"
   	    izz="0.0"/>
       </inertial>
+      <visual>
+        <geometry>
+          <xacro:insert_block name="obj_shape" />
+        </geometry>
+        <material name="black" />
+      </visual>
     </link>
 
     <xacro:actor_transmission prefix="${ns}_" />  
     <xacro:actor_gazebo prefix="${ns}_" />  
   </xacro:macro>
 </robot>
-          <!--<box size="${obj_x} ${obj_y} ${obj_z}"/>-->
