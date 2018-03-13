@@ -19,6 +19,11 @@
   <group ns="$(arg actor_ns)" >
     <param name="robot_description"
       command="$(find xacro)/xacro --inorder --xacro-ns '$(find rrbot_description)/urdf/my_actor.urdf.xacro' actor_ns:=$(arg actor_ns) parent:=$(arg parent)" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <param name="use_tf_static" value="false"/>
+      <param name="publish_frequency" value="1000"/>
+    </node>
   
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model my_actor -param robot_description">
