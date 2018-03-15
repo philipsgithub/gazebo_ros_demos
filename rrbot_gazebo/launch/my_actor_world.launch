@@ -2,8 +2,9 @@
 <launch>
   <arg name="actor_ns" default="my_actor"/>
   <arg name="parent" default="world"/>
+  <arg name="controlled" default="true"/>
 
-  <arg name="paused" default="false"/>
+  <arg name="paused" default="true"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="debug" default="false"/>
@@ -20,13 +21,16 @@
     <param name="robot_description"
       command="$(find xacro)/xacro --inorder --xacro-ns '$(find rrbot_description)/urdf/my_actor.urdf.xacro' actor_ns:=$(arg actor_ns) parent:=$(arg parent)" />
 
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <node unless="$(arg controlled)" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
       <param name="use_tf_static" value="false"/>
       <param name="publish_frequency" value="1000"/>
     </node>
   
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-        args="-urdf -model my_actor -param robot_description">
+        args="-urdf -model my_actor -param robot_description -J my_actor_joint_2 -1.57">
     </node>
   </group>
+
+  <include if="$(arg controlled)" file="$(find rrbot_control)/launch/actor_control.launch" />
+
 </launch>
