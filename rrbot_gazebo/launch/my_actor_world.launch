@@ -27,7 +27,7 @@
     </node>
   
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-        args="-urdf -model my_actor -param robot_description -J my_actor_joint_2 -1.57">
+        args="-urdf -model my_actor -param robot_description -J my_actor_joint_2 0.0">
     </node>
   </group>
 

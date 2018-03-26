@@ -11,7 +11,7 @@
 
   <xacro:my_actor.actor parent="$(arg parent)" ns="$(arg ns)">
     <origin xyz="0 -0.095 0.055" rpy="0 0 0" />
-    <origin xyz="1 0.0 0.0" rpy="0 0 0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
     <box size="0.5 0.5 0.5" />
   </xacro:my_actor.actor>
 

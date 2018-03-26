@@ -94,8 +94,9 @@
   	    izz="0.0"/>
       </inertial>
       <visual>
+        <origin xyz="0 0 0" rpy="0 -${pi/2} 0"/>
         <geometry>
-          <xacro:insert_block name="obj_shape" />
+          <mesh filename="package://rrbot_description/meshes/spherical_ring.stl" scale="2 2 2"/>
         </geometry>
         <material name="black" />
       </visual>
